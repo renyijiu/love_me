@@ -19,7 +19,7 @@ class Love
   end
 
   def get_random_corpus
-    ['想想🤔', '考虑下呗', '我做家务', '保大', '会写代码', '会修电脑'].sample
+    ['房产证写你名字', '我妈会游泳', '我做家务', '保大的', '会写代码', '会修电脑', '生儿生女都一样'].sample
   end
 
   def init_position(btn)
@@ -65,9 +65,7 @@ class Love
     base_left = 322
 
     new_left, new_top = get_rand_pos(left, top)
-
     btn.move(new_left - base_left, new_top - base_top)
-    btn.text = get_random_corpus
   end
 end
 
@@ -75,11 +73,10 @@ Shoes.app width: WIDTH, height: HEIGHT, resizable: false, title: '做我女朋�
   love = Love.new
 
   background white
-  bg_music = sound(love.music_path)
-  bg_music.play
-
   stack width: 0.4 do
     image love.img_path, height: 300
+
+    @text = para nil, align: 'center'
   end
 
   stack width: 0.6 do
@@ -103,6 +100,13 @@ Shoes.app width: WIDTH, height: HEIGHT, resizable: false, title: '做我女朋�
   motion do |left, top|
     love.init_position(@n_btn)
 
-    love.move_btn(@n_btn, left, top) if love.is_hover?(top, left)
+    if love.is_hover?(top, left)
+      love.move_btn(@n_btn, left, top)
+
+      @text.text = love.get_random_corpus
+    end
   end
+
+  bg_music = sound(love.music_path)
+  bg_music.play
 end
